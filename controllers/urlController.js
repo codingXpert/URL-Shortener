@@ -15,7 +15,7 @@ const sortUrl = async (req, res) => {
         user: userId,
       });
       await urlData.save();
-      res.status(200).json({
+      res.status(201).json({
         status: "success",
         originalUrl: originalUrl,
         shortedUrl: `http://localhost:8000/${shortUrl}`,
