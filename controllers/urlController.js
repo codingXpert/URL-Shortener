@@ -1,16 +1,18 @@
 import Url from "../models/url.js";
 import shortid from "shortid";
+import passport from "../config/passport-jwt-strategy.js";
 
 // creating short url
 const sortUrl = async (req, res) => {
   try {
     const { originalUrl } = req.body;
+    const userId =req.user.id;
     if (originalUrl) {
       const shortUrl = shortid.generate();
       const urlData = new Url({
         originalUrl: originalUrl,
         shortedUrl: shortUrl,
-        user: "658548a5e02f1e14964baae2",
+        user: userId,
       });
       await urlData.save();
       res.status(200).json({

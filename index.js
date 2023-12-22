@@ -2,10 +2,12 @@ import express from 'express';
 import dotEnv from 'dotenv/config';
 import db from './config/mongoose.js';
 import router from './routes/index.js';
+import passport from 'passport';
 const app = express();
 const PORT = 8000;
 
 //middlewares
+app.use(passport.initialize());
 app.use(express.json());
 app.use("/api", router);
 
