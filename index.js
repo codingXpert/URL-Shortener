@@ -3,8 +3,10 @@ import dotEnv from 'dotenv/config';
 import db from './config/mongoose.js';
 import router from './routes/index.js';
 import passport from 'passport';
+import corse from 'cors';
+
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 //middlewares
 app.use(passport.initialize());
