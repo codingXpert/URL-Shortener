@@ -17,7 +17,7 @@ const sortUrl = async (req, res) => {
       }
       const urlData = new Url({
         originalUrl: originalUrl,
-        shortedUrl: shortUrl,
+        shortedUrl: genUrl,
         user: userId,
       });
       await urlData.save();
