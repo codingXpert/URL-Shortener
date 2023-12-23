@@ -9,6 +9,9 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 //middlewares
+app.use(corse({
+    origin: '*'
+}));
 app.use(passport.initialize());
 app.use(express.json());
 app.use("/api", router);
