@@ -51,10 +51,13 @@ To get started with this project, follow these steps:
 * **Short Url:** AliasShorten long URLs into custom or randomly generated short URLs.
 * **API Integration:** Provide a RESTful API for users to programmatically interact with the URL shortening service.
 * **JWT Authentication:** Implemented JWT (JSON Web Token) authentication strategy for secure user login and session management.
-* **JWT Authentication:** Implemented JWT (JSON Web Token) authentication strategy for secure user login and session management.
 * **MongoDB Atlas Integration:**  Employed MongoDB Atlas as the production database, ensuring scalability, reliability, and cloud-based data storage.
+
 * **Security Middleware:**
+
 **Helmet:** Integrated Helmet to set various HTTP headers, enhancing security by protecting against common web vulnerabilities.
+
 **express-mongo-sanitize:** Employed express-mongo-sanitize to sanitize user-supplied data against NoSQL Injection attacks.
+
 **xss-clean:** Implemented xss-clean to sanitize user input from potential cross-site scripting (XSS) attacks, preventing script injections.
 
