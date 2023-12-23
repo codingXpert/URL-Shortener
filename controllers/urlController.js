@@ -8,7 +8,13 @@ const sortUrl = async (req, res) => {
     const { originalUrl } = req.body;
     const userId =req.user.id;
     if (originalUrl) {
-      const shortUrl = shortid.generate();
+      const genUrl = shortid.generate();
+      let shortUrl;
+      if(process.env.NODE_ENV === 'production'){
+        shortUrl = `https://url-shortener-rfpt.onrender.com/api/url/${genUrl}`;
+      }else{
+        shortUrl = `http://localhost:8000/api/url/${genUrl}`;
+      }
       const urlData = new Url({
         originalUrl: originalUrl,
         shortedUrl: shortUrl,
@@ -18,7 +24,7 @@ const sortUrl = async (req, res) => {
       res.status(201).json({
         status: "success",
         originalUrl: originalUrl,
-        shortedUrl: `http://localhost:8000/${shortUrl}`,
+        shortedUrl: shortUrl,
       });
     } else {
       res.status(400).json({ status: "failed", message: "Please provide url" });
