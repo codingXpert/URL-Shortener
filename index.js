@@ -3,15 +3,13 @@ import dotEnv from 'dotenv/config';
 import db from './config/mongoose.js';
 import router from './routes/index.js';
 import passport from 'passport';
-import corse from 'cors';
+import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
 //middlewares
-app.use(corse({
-    origin: '*'
-}));
+app.use(cors({origin: '*'}));
 app.use(passport.initialize());
 app.use(express.json());
 app.use("/api", router);
