@@ -61,3 +61,12 @@ To get started with this project, follow these steps:
 
 **xss-clean:** Implemented xss-clean to sanitize user input from potential cross-site scripting (XSS) attacks, preventing script injections.
 
+### Postman Documentation
+```bash
+    https://documenter.getpostman.com/view/20576167/2s9Ykrbzvk
+```
+
+### Deployed Link
+    ```bash
+    https://url-shortener-rfpt.onrender.com
+    ```
