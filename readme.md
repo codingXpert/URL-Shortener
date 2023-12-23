@@ -61,12 +61,27 @@ To get started with this project, follow these steps:
 
 **xss-clean:** Implemented xss-clean to sanitize user input from potential cross-site scripting (XSS) attacks, preventing script injections.
 
+### APIS(Accessible While Production)
+* **Register User:** ```https://url-shortener-rfpt.onrender.com/api/user/register```
+* **User Login:** ```https://url-shortener-rfpt.onrender.com/api/user/login```
+* **Short Url:** ```https://url-shortener-rfpt.onrender.com/api/url/shorten```
+* **Access Original Url:** ```https://url-shortener-rfpt.onrender.com/api/url/9VelUQjTK```
+
+
+### APIS(Accessible While Development)
+* **Register User:** ```http://localhost:8000/api/user/register```
+* **User Login:** ```http://localhost:8000/api/user/login```
+* **Short Url:** ```http://localhost:8000/api/url/shorten```
+* **Access Original Url:** ```http://localhost:8000/api/url/9VelUQjTK```
+
 ### Postman Documentation
 ```bash
     https://documenter.getpostman.com/view/20576167/2s9Ykrbzvk
 ```
 
 ### Deployed Link
-    ```bash
+ ```bash
     https://url-shortener-rfpt.onrender.com
-    ```
+```
+https://url-shortener-rfpt.onrender.com
+
