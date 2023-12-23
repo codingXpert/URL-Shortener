@@ -83,5 +83,4 @@ To get started with this project, follow these steps:
  ```bash
     https://url-shortener-rfpt.onrender.com
 ```
-https://url-shortener-rfpt.onrender.com
 
