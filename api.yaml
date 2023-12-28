@@ -1,4 +1,6 @@
 swagger: "2.0"
+tags: 
+  name: User, Url
 info:
   title: Url Shortener APIs
   description: This project is a URL shortener that allows users to shorten long URLs into shorter ones.
@@ -21,7 +23,8 @@ paths:
   #Register User
   /api/user/register:
     post:
-      summary: This Api is for user sign-up.
+      tags: [User]
+      summary: This Api is for user sign-up
       description: Pass the username, email and password to create an account.
 
       #Request Body
@@ -85,6 +88,7 @@ paths:
   #Login User
   /api/user/login:
     post:
+      tags: [User]
       summary: This Api is for user login.
       description: Pass email and password to login to the account.
 
@@ -153,6 +157,7 @@ paths:
 #Shorten Url
   /api/url/shorten:
     post:
+      tags: [Url]
       summary: This Api is to create shorten url.
       description: Pass the complex url as 'originalUrl' from body and the token from header
 
@@ -204,6 +209,7 @@ paths:
 # Access the shorted url
   /api/url/{url}:
     get:
+      tags: [Url]
       summary: This Api is to access the original url using shorted url.
       description: Pass the complete shorted url as params to access the original url
 
