@@ -23,6 +23,13 @@ app.use(express.json());
 app.use("/api", router);
 
 
+// home route
+app.get("/", (req, res) => {
+    res.status(200).json({
+        message:` Welcome To Home Page.Please Open Postman and access all the APIs provided in documentation`
+    });
+})
+
 app.listen(PORT, (err) => {
     if(err){
         console.log("Error while running the server", err);
