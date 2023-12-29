@@ -170,7 +170,7 @@ paths:
         - in: body
           name: Shorten Url
           schema:
-            type: object
+            type: https
             properties:
               originalUrl:
                 type: string
