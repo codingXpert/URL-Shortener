@@ -161,6 +161,22 @@ paths:
       summary: This Api is to create shorten url.
       description: Pass the complex url as 'originalUrl' from body and the token from header
 
+      #Request Body
+      produces:
+        - application/json
+      consumes:
+        - application/json  
+      parameters:
+        - in: body
+          name: Shorten Url
+          schema:
+            type: object
+            properties:
+              originalUrl:
+                type: string
+            example:
+              originalUrl: https://www.istockphoto.com/photo/lord-ganesha-ganesha-festival-lord-ganesha-on-colorful-background-gm1262197191-369315935?utm_source=pixabay&utm_medium=affiliate&utm_campaign=SRP_image_sponsored&utm_content=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fgod%2F&utm_term=god
+
       #Response Body
       responses:
         201:
