@@ -25,7 +25,7 @@ app.use(passport.initialize());
 app.use(express.json());
 app.use("/api", router);
 app.use(cors({
-  origin: 'https://url-shortener-rfpt.onrender.com/api-docs/' || `http://localhost:8000/api-docs/`,
+  origin: 'https://url-shortener-rfpt.onrender.com' || `http://localhost:8000`,
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
