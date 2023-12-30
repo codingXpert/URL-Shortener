@@ -16,7 +16,7 @@ info:
   -url: "https://codeial-gu73.onrender.com"
 description: This is the cloud server
 
-schemes: [https://url-shortener-rfpt.onrender.com, http://localhost:8000]
+schemes: [https, http]
 
 # Define security definitions for bearer token
 securityDefinitions:
