@@ -80,7 +80,8 @@ To get started with this project, follow these steps:
 ```
 
 ### Deployed Link
+* **Access all the available APIs using Swagger-UI**
  ```bash
-    https://url-shortener-rfpt.onrender.com
+    https://url-shortener-rfpt.onrender.com/api-docs/
 ```
 
