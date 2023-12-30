@@ -15,7 +15,6 @@ info:
     description: This is the local servers
   -url: "https://codeial-gu73.onrender.com"
 description: This is the cloud server
-
 schemes: [https, http]
 
 # Define security definitions for bearer token
@@ -23,6 +22,7 @@ securityDefinitions:
   BearerAuth:
     type: apiKey
     name: Authorization
+    description: Paste Your Token Like This 'Bearer Your Login Token'
     in: header
 
 # APIs
