@@ -21,10 +21,15 @@ const yamlFilePath = "api.yaml";
 app.use(helmet()); // secure our header section
 app.use(xss_clean()); // checks and sanitize the input coming from POST, GET, params
 app.use(mongoSanitize()); // middleware which sanitizes user-supplied data to prevent MongoDB Operator Injection from(req.body, req.query or req.params).
-app.use(cors({ origin: "*" }));
 app.use(passport.initialize());
 app.use(express.json());
 app.use("/api", router);
+app.use(cors({
+  origin: 'https://url-shortener-rfpt.onrender.com/api-docs/' || `http://localhost:8000/api-docs/`,
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 
 // yaml file setup for swagger documentation
 try {

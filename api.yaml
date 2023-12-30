@@ -16,14 +16,14 @@ info:
   -url: "https://codeial-gu73.onrender.com"
 description: This is the cloud server
 
-schemes: [http, https]
+schemes: [https://url-shortener-rfpt.onrender.com, http://localhost:8000]
 
 # Define security definitions for bearer token
-# securityDefinitions:
-#   BearerAuth:
-#     type: apiKey
-#     name: Authorization
-#     in: header
+securityDefinitions:
+  BearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
 
 # APIs
 paths:
@@ -185,8 +185,8 @@ paths:
               originalUrl: https://www.istockphoto.com/photo/lord-ganesha-ganesha-festival-lord-ganesha-on-colorful-background-gm1262197191-369315935?utm_source=pixabay&utm_medium=affiliate&utm_campaign=SRP_image_sponsored&utm_content=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fgod%2F&utm_term=god
 
       # Security definition for the bearer token
-      # security:
-      #   - BearerAuth: []
+      security:
+        - BearerAuth: []
 
       # Response Body
       responses:
