@@ -6,18 +6,35 @@ import bcrypt from "bcrypt";
 const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const userNameValidation = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
     if (username && email && password) {
-      const salt = await bcrypt.genSalt(parseInt(process.env.SALT_CONSTANT));
-      const hashedPassword = await bcrypt.hash(password, salt);
-      const userData = new User({
-        username: username,
-        email: email,
-        password: hashedPassword,
-      });
-      await userData.save();
-      res
-        .status(201)
-        .json({ status: "success", message: "user registered successfully" });
+      if (String(email).toLowerCase().match(validRegex)) {
+        if (String(username).match(userNameValidation)) {
+          const salt = await bcrypt.genSalt(parseInt(process.env.SALT_CONSTANT));
+          const hashedPassword = await bcrypt.hash(password, salt);
+          const userData = new User({
+            username: username,
+            email: email,
+            password: hashedPassword,
+          });
+          await userData.save();
+          res.status(201).json({
+            status: "success",
+            message: "user registered successfully",
+          });
+        } else {
+          res
+            .status(400)
+            .json({
+              status: "failed",
+              message:
+                "The username must include at least one uppercase letter, one special symbol, digits, and ensure a minimum length of 8 characters.",
+            });
+        }
+      } else {
+        res.json({ status: "failed", message: "Enter Valid Email" });
+      }
     } else {
       res
         .status(400)
@@ -42,26 +59,34 @@ const registerUser = async (req, res) => {
 const userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (email && password) {
+      if (String(email).toLowerCase().match(validRegex)) {
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+          return res
+            .status(401)
+            .json({ status: "failed", message: "Invalid credentials" });
+        }
+        const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
+          expiresIn: process.env.EXPIRES_IN,
+        });
+        return res.status(200).json({
+          status: "success",
+          message: "sign in Successful",
+          data: {
+            token: token,
+          },
+        });
+      } else {
+        res.json({ status: "failed", message: "Enter Valid Email" });
+      }
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(401).json({ status: "failed", message: "Invalid credentials" });
+        return res
+          .status(401)
+          .json({ status: "failed", message: "Invalid credentials" });
       }
-
-      const passwordMatch = await bcrypt.compare(password, user.password);
-      if (!passwordMatch) {
-        return res.status(401).json({ status: "failed", message: "Invalid credentials" });
-      }
-      const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
-        expiresIn: process.env.EXPIRES_IN
-      });
-      return res.status(200).json({
-        status: "success",
-        message: "sign in Successful",
-        data: {
-          token: token,
-        }
-      });
     } else {
       res
         .status(400)
@@ -73,7 +98,39 @@ const userLogin = async (req, res) => {
   }
 };
 
+// Update User
+const updateUsername = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const userNameValidation = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
+    if (String(username).match(userNameValidation)) {
+      const updateUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+      if (updateUser) {
+        res
+        .status(200)
+        .json({ status: "failed", message: "user updated successfully" });
+      } else {
+        res
+        .status(404)
+        .json({ status: "failed", message: "User Does Not Exist"})
+      }
+    } else {
+      res
+        .status(400)
+        .json({
+          status: "failed",
+          message: "The username must include at least one uppercase letter, one special symbol, digits, and ensure a minimum length of 8 characters.",
+        });
+    }
+  } catch (error) {
+    res
+        .status(500)
+        .json({ status: "failed", message: "Internal Server Error", error: error.message})
+  }
+};
+
 export default {
   registerUser,
   userLogin,
+  updateUsername,
 };

@@ -159,7 +159,53 @@ paths:
           schema:
             type: object
             example:
-              message: Internal Server Error
+              message: Internal Server Error.
+
+  /api/user/update/{userId}:
+    put:
+      tags: [User]
+      summary: This Api is to update username.
+      description: Pass email and password to login to the account.
+
+      #Request Body
+      produces:
+        - application/json
+      consumes:
+        - application/json  
+      parameters:
+        - in: body
+          name: User Update
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+            example:
+              username: Vivek@123
+
+        - in: path  
+          name: userId
+          schema:
+            type: string
+            properties:
+              userId: string
+            example: 
+              userId: 65a8bb83bb0175a541606615     
+
+      #Response Body  
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: object
+            properties:  #Defining the type of each properties of an object
+              status:
+                type: string
+              message:
+                type: string 
+            example:
+              status: success
+              message: User Updated Successfully            
 
 #Shorten Url
   /api/url/shorten:
