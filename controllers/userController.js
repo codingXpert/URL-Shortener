@@ -24,13 +24,10 @@ const registerUser = async (req, res) => {
             message: "user registered successfully",
           });
         } else {
-          res
-            .status(400)
-            .json({
-              status: "failed",
-              message:
-                "The username must include at least one uppercase letter, one special symbol, digits, and ensure a minimum length of 8 characters.",
-            });
+          res.status(400).json({
+            status: "failed",
+            message: "The username must include at least one uppercase letter, one special symbol, digits, and ensure a minimum length of 8 characters.",
+          });
         }
       } else {
         res.json({ status: "failed", message: "Enter Valid Email" });
@@ -66,7 +63,7 @@ const userLogin = async (req, res) => {
         return res
           .status(401)
           .json({ status: "failed", message: "Invalid credentials" });
-      }else {
+      } else {
         if (String(email).toLowerCase().match(validRegex)) {
           const passwordMatch = await bcrypt.compare(password, user.password);
           if (!passwordMatch) {
@@ -87,47 +84,54 @@ const userLogin = async (req, res) => {
         } else {
           res.json({ status: "failed", message: "Enter Valid Email" });
         }
-      } 
+      }
     } else {
       res
         .status(400)
         .json({ status: "failed", message: "All fields are required" });
     }
   } catch (error) {
-    return res.status(500).json({status: failed, message: "Internal server error", error: error.message });
+    return res
+      .status(500)
+      .json({
+        status: failed,
+        message: "Internal server error",
+        error: error.message,
+      });
   }
 };
 
 // Update User
 const updateUsername = async (req, res) => {
   try {
-    const { username }  = req.body;
-    const userId  = req.params.userId;
-    const userNameValidation = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
+    const { username } = req.body;
+    const userId = req.params.userId;
+    const userNameValidation =  /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
     if (String(username).match(userNameValidation)) {
       const updateUser = await User.findByIdAndUpdate(userId, { username }, { new: true });
-      console.log(updateUser);
       if (updateUser) {
         res
-        .status(200)
-        .json({ status: "success", message: "user updated successfully" });
+          .status(200)
+          .json({ status: "success", message: "user updated successfully" });
       } else {
         res
-        .status(404)
-        .json({ status: "failed", message: "User Does Not Exist"})
+          .status(404)
+          .json({ status: "failed", message: "User Does Not Exist" });
       }
     } else {
-      res
-        .status(400)
-        .json({
-          status: "failed",
-          message: "The username must include at least one uppercase letter, one special symbol, digits, and ensure a minimum length of 8 characters.",
-        });
+      res.status(400).json({
+        status: "failed",
+        message: "The username must include at least one uppercase letter, one special symbol, digits, and ensure a minimum length of 8 characters.",
+      });
     }
   } catch (error) {
     res
-        .status(500)
-        .json({ status: "failed", message: "Internal Server Error", error: error.message})
+      .status(500)
+      .json({
+        status: "failed",
+        message: "Internal Server Error",
+        error: error.message,
+      });
   }
 };
 
