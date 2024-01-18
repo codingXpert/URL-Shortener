@@ -61,54 +61,56 @@ const userLogin = async (req, res) => {
     const { email, password } = req.body;
     var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (email && password) {
-      if (String(email).toLowerCase().match(validRegex)) {
-        const passwordMatch = await bcrypt.compare(password, user.password);
-        if (!passwordMatch) {
-          return res
-            .status(401)
-            .json({ status: "failed", message: "Invalid credentials" });
-        }
-        const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
-          expiresIn: process.env.EXPIRES_IN,
-        });
-        return res.status(200).json({
-          status: "success",
-          message: "sign in Successful",
-          data: {
-            token: token,
-          },
-        });
-      } else {
-        res.json({ status: "failed", message: "Enter Valid Email" });
-      }
       const user = await User.findOne({ email });
       if (!user) {
         return res
           .status(401)
           .json({ status: "failed", message: "Invalid credentials" });
-      }
+      }else {
+        if (String(email).toLowerCase().match(validRegex)) {
+          const passwordMatch = await bcrypt.compare(password, user.password);
+          if (!passwordMatch) {
+            return res
+              .status(401)
+              .json({ status: "failed", message: "Invalid credentials" });
+          }
+          const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
+            expiresIn: process.env.EXPIRES_IN,
+          });
+          return res.status(200).json({
+            status: "success",
+            message: "sign in Successful",
+            data: {
+              token: token,
+            },
+          });
+        } else {
+          res.json({ status: "failed", message: "Enter Valid Email" });
+        }
+      } 
     } else {
       res
         .status(400)
         .json({ status: "failed", message: "All fields are required" });
     }
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Internal server error" });
+  } catch (error) {
+    return res.status(500).json({status: failed, message: "Internal server error", error: error.message });
   }
 };
 
 // Update User
 const updateUsername = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const { username }  = req.body;
+    const userId  = req.params.userId;
     const userNameValidation = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
     if (String(username).match(userNameValidation)) {
-      const updateUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+      const updateUser = await User.findByIdAndUpdate(userId, { username }, { new: true });
+      console.log(updateUser);
       if (updateUser) {
         res
         .status(200)
-        .json({ status: "failed", message: "user updated successfully" });
+        .json({ status: "success", message: "user updated successfully" });
       } else {
         res
         .status(404)
